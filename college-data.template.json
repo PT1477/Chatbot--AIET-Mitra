@@ -1,0 +1,15 @@
+{
+  "college_info": {
+    "official_name": "Apollo Institute of Engineering and Technology",
+    "short_name": "AIET",
+    "affiliation": "Gujarat Technological University",
+    "official_website": "ADD_OFFICIAL_URL",
+    "contact_email": "ADD_VERIFIED_EMAIL",
+    "phone": "ADD_VERIFIED_PHONE",
+    "address": "ADD_VERIFIED_ADDRESS",
+    "last_verified": "YYYY-MM-DD"
+  },
+  "faqs": [
+    { "question": "ADD_APPROVED_QUESTION", "answer": "ADD_OFFICIALLY_VERIFIED_ANSWER", "source_url": "ADD_OFFICIAL_SOURCE", "last_verified": "YYYY-MM-DD" }
+  ]
+}

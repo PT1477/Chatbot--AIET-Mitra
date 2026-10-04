@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIET - Student Support AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'background-pan': 'backgroundPan 15s linear infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        backgroundPan: {
+                            '0%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                            '100%': { 'background-position': '0% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-['Inter'] bg-gray-900 text-slate-200 overflow-x-hidden">
+
+    <canvas id="neural-network-canvas" class="fixed top-0 left-0 w-full h-full z-0"></canvas>
+
+    <div id="main-content" class="relative z-10">
+        <!-- Header & Hero Section -->
+        <header class="relative min-h-screen flex items-center justify-center text-center p-6 overflow-hidden">
+            <video autoplay loop muted playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none">
+                <source
+                    src="https://assets.mixkit.co/videos/preview/mixkit-digital-wave-of-small-squares-on-a-black-background-42293-large.mp4"
+                    type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="absolute inset-0 bg-black/70"></div>
+            <div class="relative z-10">
+                <img src="https://placehold.co/112x112/transparent/ffffff?text=AIET" alt="AIET Logo"
+                    class="h-28 mx-auto mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white animate-fade-in-up"
+                    style="animation-delay: 0.3s;">
+                    Apollo Institute of Engineering & Technology
+                </h1>
+                <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mt-6 animate-fade-in-up"
+                    style="animation-delay: 0.5s;">
+                    Engineering the Future. Igniting Innovation. Your journey to excellence starts here.
+                </p>
+                <div class="mt-10 flex items-center justify-center space-x-4 animate-fade-in-up"
+                    style="animation-delay: 0.7s;">
+                    <a href="#admissions"
+                        class="px-8 py-3 bg-cyan-400 text-gray-900 font-semibold rounded-full shadow-lg shadow-cyan-500/20 hover:bg-cyan-300 transition transform hover:scale-105">Apply
+                        Now</a>
+                    <button id="login-button"
+                        class="px-8 py-3 bg-white/10 border border-cyan-400/30 text-white font-semibold rounded-full shadow-lg hover:bg-white/20 transition transform hover:scale-105">
+                        Student Login
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Sections -->
+        <main class="bg-gray-900">
+            <div class="container mx-auto px-6 py-20 space-y-24">
+
+                <section id="features" class="text-center reveal-on-scroll">
+                    <h2 class="text-4xl font-bold text-white mb-4">Why Choose AIET?</h2>
+                    <p class="text-lg text-slate-300 max-w-3xl mx-auto mb-12">An ecosystem designed for holistic growth
+                        and unparalleled success.</p>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div
+                            class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-cyan-500/20 hover:border-cyan-500/50 transition transform hover:-translate-y-2">
+                            <div class="text-cyan-400 text-5xl mb-6"><i class="fas fa-rocket"></i></div>
+                            <h3 class="text-xl font-semibold text-white mb-2">Innovative Curriculum</h3>
+                            <p class="text-slate-300">Stay ahead with industry-aligned courses and hands-on
+                                project-based learning.</p>
+                        </div>
+                        <div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-cyan-500/20 hover:border-cyan-500/50 transition transform hover:-translate-y-2"
+                            style="animation-delay: 150ms;">
+                            <div class="text-cyan-400 text-5xl mb-6"><i class="fas fa-users"></i></div>
+                            <h3 class="text-xl font-semibold text-white mb-2">Expert Faculty</h3>
+                            <p class="text-slate-300">Learn from seasoned academicians and industry experts dedicated to
+                                your success.</p>
+                        </div>
+                        <div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-cyan-500/20 hover:border-cyan-500/50 transition transform hover:-translate-y-2"
+                            style="animation-delay: 300ms;">
+                            <div class="text-cyan-400 text-5xl mb-6"><i class="fas fa-building"></i></div>
+                            <h3 class="text-xl font-semibold text-white mb-2">Modern Infrastructure</h3>
+                            <p class="text-slate-300">State-of-the-art labs, smart classrooms, and a vast digital
+                                library await you.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="admissions" class="text-center space-y-8 reveal-on-scroll">
+                    <h2 class="text-4xl font-bold text-white">Admissions Open</h2>
+                    <p class="text-lg text-slate-300 max-w-3xl mx-auto">
+                        Your future begins here. Our team is ready to guide you through a seamless admission process.
+                    </p>
+                    <div class="flex justify-center">
+                        <a href="#admissions"
+                            class="px-10 py-4 bg-cyan-400 text-gray-900 font-bold rounded-full shadow-lg shadow-cyan-500/20 hover:bg-cyan-300 transition transform hover:scale-105">
+                            Start Your Application
+                        </a>
+                    </div>
+                </section>
+                <section id="contact" class="text-center space-y-8 reveal-on-scroll">
+                    <h2 class="text-4xl font-bold text-white">Need Help?</h2>
+                    <p class="text-lg text-slate-300">Our AI assistant is available 24/7 to answer your questions.</p>
+                    <div class="flex justify-center">
+                        <button id="chatbot-toggle"
+                            class="py-4 px-8 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold rounded-full shadow-lg hover:scale-110 transition transform">
+                            <i class="fas fa-robot mr-2"></i> Chat with AIET Mitra
+                        </button>
+                    </div>
+                </section>
+            </div>
+            <footer class="bg-gray-900/50 text-center py-8 border-t border-cyan-500/20">
+                <p class="text-slate-400">&copy; 2025 Apollo Institute of Engineering and Technology. All Rights
+                    Reserved.</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- CSS -->
+    <style>
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            display: none;
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.4);
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-in-out both;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .thin-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .thin-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .thin-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        @keyframes pulse-typing {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #94a3b8;
+            animation: pulse-typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .toast {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1);
+            max-width: 350px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background-color: #ef4444;
+        }
+
+        .toast.success {
+            background-color: #22c55e;
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-stagger {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease-out forwards;
+            animation-delay: var(--stagger-delay, 0);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #chat-container {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.05);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+
+        #chat-container.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        body.chatbot-active {
+            overflow: hidden;
+        }
+
+        .chat-message-bubble {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        .chat-message-bubble.user {
+            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+            color: white;
+            align-self: flex-end;
+            border-radius: 20px 20px 4px 20px;
+            box-shadow: 0 4px 20px rgba(0, 210, 255, 0.2);
+        }
+
+        .chat-message-bubble.bot {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e5e7eb;
+            align-self: flex-start;
+            border-radius: 20px 20px 20px 4px;
+        }
+
+        #mic-button.is-listening {
+            color: #ef4444;
+            animation: pulse-mic 1.5s infinite;
+        }
+
+        @keyframes pulse-mic {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .suggestion-chip {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease;
+        }
+
+        .suggestion-chip:hover {
+            background-color: rgba(0, 210, 255, 0.2);
+            border-color: rgba(0, 210, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .typewriter-cursor::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            from,
+            to {
+                color: transparent;
+            }
+
+            50% {
+                color: #00d2ff;
+            }
+        }
+
+        .hud-avatar {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .scanline::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0) 100%);
+            background-size: 100% 4px;
+            animation: scan 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 0 100%;
+            }
+        }
+    </style>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-[150] space-y-3"></div>
+
+    <!-- Login/Signup Modal -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="bg-gray-800 text-white w-full max-w-md m-4 p-8 rounded-2xl shadow-2xl relative">
+            <button id="auth-close-btn"
+                class="absolute top-4 right-4 text-gray-400 hover:text-white transition transform hover:rotate-90"><i
+                    class="fas fa-times text-xl"></i></button>
+            <div class="text-center mb-6"><i class="fas fa-university text-blue-400 mb-3"></i>
+                <h2 id="auth-title" class="text-3xl font-bold">Log In</h2>
+                <p id="auth-subtitle" class="text-gray-400 mt-2">Access your AIET student portal.</p>
+            </div>
+            <form id="auth-form" class="space-y-4">
+                <div><input type="email" id="auth-email" placeholder="Email address" required
+                        class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white transition">
+                </div>
+                <div><input type="password" id="auth-password" placeholder="Password" required
+                        class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white transition">
+                </div>
+                <div id="confirm-password-group" class="hidden"><input type="password" id="auth-confirm-password"
+                        name="auth-confirm-password" placeholder="Confirm password" disabled
+                        class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white transition">
+                </div>
+                <button type="submit" id="auth-submit-btn"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-lg transition">Continue</button>
+            </form>
+            <div class="text-center mt-6">
+                <p class="text-sm text-gray-400"><span id="auth-prompt-text">Don't have an account?</span> <button
+                        id="auth-toggle-mode" class="font-semibold text-blue-400 hover:underline">Sign up</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full-Page Chatbot Container -->
+    <div id="chat-container">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0c0a1f] via-[#10142c] to-[#0c0a1f]"></div>
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10">
+        </div>
+        <div class="scanline"></div>
+
+        <div class="relative w-full h-full flex flex-col md:flex-row max-w-7xl mx-auto">
+            <aside
+                class="w-full md:w-[320px] bg-black/20 backdrop-blur-lg border-r border-cyan-400/20 text-white p-6 flex flex-col h-full flex-shrink-0">
+                <div class="flex items-center justify-between gap-2 mb-6">
+                    <button id="ui-new-chat"
+                        class="flex items-center gap-2 bg-cyan-400/10 hover:bg-cyan-400/20 border border-cyan-400/20 px-3 py-2 rounded-md transition w-full justify-center"><i
+                            class="fas fa-plus"></i><span class="text-sm font-medium" data-translate="newChat">New
+                            Chat</span></button>
+                    <button id="ui-close" aria-label="Close chat" class="text-slate-400 hover:text-white transition"><i
+                            class="fas fa-times text-xl"></i></button>
+                </div>
+                <div id="ui-chat-list" class="flex-1 overflow-auto thin-scroll space-y-2 -mr-4 pr-4"></div>
+                <div class="mt-6 border-t border-cyan-400/20 pt-4">
+                    <div id="user-profile-section" class="flex items-center gap-3">
+                        <div id="ui-avatar"
+                            class="w-10 h-10 hud-avatar bg-cyan-500 flex items-center justify-center font-semibold text-black">
+                            <i class="fas fa-user-circle text-2xl"></i>
+                        </div>
+                        <div>
+                            <div id="ui-user-name" class="font-semibold text-sm">Please Log In</div>
+                            <div id="ui-user-status" class="text-xs text-slate-400"></div>
+                        </div>
+                        <button id="logout-button" class="ml-auto text-slate-400 hover:text-white transition hidden"
+                            aria-label="Log out"><i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+                </div>
+            </aside>
+            <main class="flex-1 flex flex-col bg-black/10 h-full">
+                <header class="flex items-center justify-between px-6 py-4 border-b border-cyan-400/20 flex-shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="relative"><i class="fas fa-robot text-cyan-400 text-2xl"></i><span
+                                class="absolute bottom-0 right-0 block h-2 w-2 rounded-full bg-green-500 ring-2 ring-gray-800"></span>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-semibold" data-translate="chatbotTitle">AIET Mitra AI</h2>
+                            <p class="text-xs text-slate-400">System Status: Online</p>
+                        </div>
+                    </div>
+                    <div><select id="language-selector"
+                            class="bg-black/20 border border-cyan-400/20 text-white text-sm rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                            <option value="en-US">English</option>
+                            <option value="hi-IN">हिन्दी</option>
+                            <option value="gu-IN">ગુજરાતી</option>
+                            <option value="mr-IN">मરાठी</option>
+                            <option value="ta-IN">தமிழ்</option>
+                            <option value="te-IN">తెలుగు</option>
+                            <option value="kn-IN">ಕನ್ನಡ</option>
+                            <option value="ml-IN">മലയാളം</option>
+                            <option value="bn-IN">বাংলা</option>
+                            <option value="pa-IN">ਪੰਜਾਬੀ</option>
+                            <option value="de-DE">German</option>
+                        </select></div>
+                </header>
+                <div id="ui-messages" class="flex-1 overflow-y-auto p-6 space-y-6 thin-scroll"></div>
+                <div id="suggestion-chips-container" class="px-6 pb-4 flex flex-wrap gap-2"></div>
+                <div class="px-6 py-4 border-t border-cyan-400/20 flex items-center gap-3 flex-shrink-0">
+                    <textarea id="ui-input" rows="1" placeholder="Please log in to chat..."
+                        data-translate-placeholder="placeholder"
+                        class="flex-1 resize-none rounded-2xl bg-black/20 border border-cyan-400/20 text-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-shadow"></textarea>
+                    <button id="mic-button"
+                        class="text-slate-400 hover:text-cyan-400 w-12 h-12 flex items-center justify-center rounded-full transition-colors"
+                        aria-label="Use microphone"><i class="fas fa-microphone text-xl"></i></button>
+                    <button id="ui-send"
+                        class="bg-cyan-500 hover:bg-cyan-400 text-black w-12 h-12 flex items-center justify-center rounded-full shadow-lg shadow-cyan-500/20 transition transform hover:scale-110"><i
+                            class="fas fa-paper-plane"></i></button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script type="module">
+        /*
+            Developer notes:
+            - To enable live Gemini responses for local testing only, set GEMINI_API_KEY below.
+            - DO NOT commit or expose production API keys in client-side code. For production, create a server-side
+              proxy that stores the key securely and call that endpoint from the client.
+            - Firebase config is included for convenience; ensure the project keys are valid for your Firebase project.
+        */
+        // --- Three.js Backgrounds ---
+        function createParticleAnimation(canvas) {
+            // Placeholder for animation code
+        }
+
+        // Main page observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // DOM references
+        const chatbotToggleBtn = document.getElementById('chatbot-toggle');
+        const chatContainer = document.getElementById('chat-container');
+
+        const messagesEl = chatContainer.querySelector('#ui-messages');
+        const inputEl = chatContainer.querySelector('#ui-input');
+        const sendBtn = chatContainer.querySelector('#ui-send');
+        const micBtn = chatContainer.querySelector('#mic-button');
+        const newChatBtn = chatContainer.querySelector('#ui-new-chat');
+        const closeBtn = chatContainer.querySelector('#ui-close');
+        const avatarEl = chatContainer.querySelector('#ui-avatar');
+        const userNameEl = chatContainer.querySelector('#ui-user-name');
+        const userStatusEl = chatContainer.querySelector('#ui-user-status');
+        const logoutBtn = chatContainer.querySelector('#logout-button');
+        const languageSelector = chatContainer.querySelector('#language-selector');
+        const uiChatList = chatContainer.querySelector('#ui-chat-list');
+        const suggestionChipsContainer = chatContainer.querySelector('#suggestion-chips-container');
+
+        const loginBtn = document.getElementById('login-button');
+        const toastContainer = document.getElementById('toast-container');
+        const authModal = document.getElementById('auth-modal');
+        const authCloseBtn = document.getElementById('auth-close-btn');
+        const authForm = document.getElementById('auth-form');
+        const authEmailEl = document.getElementById('auth-email');
+        const authPasswordEl = document.getElementById('auth-password');
+        const confirmPasswordGroup = document.getElementById('confirm-password-group');
+        const authConfirmPasswordEl = document.getElementById('auth-confirm-password');
+        const authSubmitBtn = document.getElementById('auth-submit-btn');
+        const authToggleModeBtn = document.getElementById('auth-toggle-mode');
+        const authTitle = document.getElementById('auth-title');
+        const authSubtitle = document.getElementById('auth-subtitle');
+        const authPromptText = document.getElementById('auth-prompt-text');
+
+        // Firebase modular SDK imports (from CDN). Keeps the script type=module working in browsers.
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+        import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, arrayUnion, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+        // Gemini API Key (Get this from Google AI Studio or Google Cloud Console)
+        // IMPORTANT: Do NOT embed sensitive production keys in client-side code. Use a server-side proxy for production.
+        // For local testing only: set the Gemini API key in a server-side environment variable and run the proxy.
+        // IMPORTANT: Do NOT leave production keys in client-side code. The server proxy (see README) is the recommended approach.
+        const GEMINI_API_KEY = ""; // intentionally empty — use the server proxy instead
+        const isGeminiConfigured = Boolean(GEMINI_API_KEY && GEMINI_API_KEY.trim().length > 0);
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMyl_FQOAKpY9JeKX6tK5hHoak1XNSgZg",
+            authDomain: "chatbot-main-key.firebaseapp.com",
+            projectId: "chatbot-main-key",
+            storageBucket: "chatbot-main-key.firebasestorage.app",
+            messagingSenderId: "861714677312",
+            appId: "1:861714677312:web:a34d72f100bff0795269a5",
+            measurementId: "G-ZDFRV5LWSP"
+        };
+
+        // Optional: Set this to your student portal URL. Leave empty to open the auth modal instead.
+        const PORTAL_URL = '';
+        const appId = 'default-app-id';
+
+        let app, db, auth, userId, isLoginMode = true,
+            currentChatSessionId = null, isAuthReady = false, isBotTyping = false,
+            unsubscribeFromChat = null, unsubscribeFromChatList = null,
+            isListening = false, recognition = null,
+            currentLanguage = 'en-US';
+
+        const translations = { 'en-US': { newChat: 'New Chat', chatbotTitle: 'AIET Mitra AI', placeholder: 'Ask about AIET...', listening: 'Listening...', loginRequired: 'Please log in to see your chat history.', langName: 'English' }, 'hi-IN': { newChat: 'नई चैट', chatbotTitle: 'AIET मित्र एआई', placeholder: 'AIET के बारे में पूछें...', listening: 'सुन रहा है...', loginRequired: 'अपनी चैट हिस्ट्री देखने के लिए कृपया लॉग इन करें।', langName: 'Hindi' }, /* ... other languages */ };
+
+        const updateUIText = (lang) => {
+            currentLanguage = lang;
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.dataset.translate;
+                if (translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
+            });
+            document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+                const key = el.dataset.translatePlaceholder;
+                if (translations[lang] && translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+        };
+
+        const speakText = (text) => {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = currentLanguage;
+            utterance.rate = 0.95;
+            window.speechSynthesis.speak(utterance);
+        };
+
+        const handleVoiceInput = () => {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) { showToast('Sorry, your browser does not support voice input.', 'error'); return; }
+            if (isListening) { recognition.stop(); return; }
+            recognition = new SpeechRecognition();
+            recognition.lang = currentLanguage;
+            recognition.onstart = () => { isListening = true; micBtn.classList.add('is-listening'); inputEl.placeholder = translations[currentLanguage].listening; };
+            recognition.onend = () => { isListening = false; micBtn.classList.remove('is-listening'); inputEl.placeholder = auth.currentUser ? translations[currentLanguage].placeholder : "Please log in to chat..."; };
+            recognition.onerror = (event) => showToast(`Voice recognition error: ${event.error}`, 'error');
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript.trim();
+                if (transcript) { inputEl.value = transcript; sendMessage(); }
+            };
+            recognition.start();
+        };
+
+        const showToast = (content, type = 'error') => {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const iconClass = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            toast.innerHTML = `<i class="fas ${iconClass} toast-icon"></i><p>${content}</p>`;
+            toastContainer.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.addEventListener('transitionend', () => toast.remove());
+            }, 3000);
+        };
+
+        const mapFirebaseError = (code) => ({ 'auth/invalid-credential': 'Invalid email or password.', 'auth/wrong-password': 'Invalid email or password.', 'auth/user-not-found': 'Invalid email or password.', 'auth/email-already-in-use': 'This email is already registered.', 'auth/weak-password': 'Password must be at least 6 characters.', 'auth/invalid-email': 'Please enter a valid email address.' }[code] || 'An unexpected error occurred.');
+
+        const setUIReady = (ready) => {
+            if (!auth) return; // Guard against auth not being initialized
+            const isLoggedIn = auth.currentUser;
+            inputEl.disabled = sendBtn.disabled = newChatBtn.disabled = micBtn.disabled = !ready || isBotTyping || !isLoggedIn;
+            inputEl.placeholder = isLoggedIn ? translations[currentLanguage].placeholder : "Please log in to chat...";
+        };
+
+        const showFirebaseConnectionError = () => { messagesEl.innerHTML = `<div class="p-4 bg-red-900/50 text-red-300 rounded-lg text-sm text-center">Chat service is unavailable. Please check your connection.</div>`; setUIReady(false); };
+
+        const typeOutMessage = (bubbleEl, text) => {
+            let i = 0;
+            bubbleEl.textContent = "";
+            bubbleEl.classList.add('typewriter-cursor');
+            const typing = setInterval(() => {
+                if (i < text.length) {
+                    bubbleEl.textContent += text.charAt(i);
+                    i++;
+                    messagesEl.scrollTop = messagesEl.scrollHeight;
+                } else {
+                    clearInterval(typing);
+                    bubbleEl.classList.remove('typewriter-cursor');
+                }
+            }, 20);
+        };
+
+        const renderMessage = (msg, isTyping = false) => {
+            const isUser = msg.role === 'user';
+            const wrapper = document.createElement('div');
+            wrapper.className = `flex items-start gap-4 animate-stagger`;
+            wrapper.style.setProperty('--stagger-delay', '0s');
+
+            const avatarHTML = `<div class="hud-avatar flex-shrink-0 w-10 h-10 flex items-center justify-center font-semibold text-white bg-black/20 backdrop-blur-sm border border-cyan-400/30">
+                <i class="fas ${isUser ? 'fa-user' : 'fa-robot'} text-cyan-400"></i>
+            </div>`;
+            const bubble = document.createElement('div');
+            bubble.className = `max-w-lg p-4 chat-message-bubble ${isUser ? 'user' : 'bot'}`;
+
+            if (isUser) {
+                wrapper.classList.add('justify-end');
+                bubble.textContent = msg.text;
+                wrapper.innerHTML = bubble.outerHTML + avatarHTML;
+            } else {
+                wrapper.classList.add('justify-start');
+                wrapper.innerHTML = avatarHTML + bubble.outerHTML;
+                const botBubble = wrapper.querySelector('.chat-message-bubble');
+                if (isTyping) {
+                    typeOutMessage(botBubble, msg.text);
+                } else {
+                    botBubble.textContent = msg.text;
+                }
+            }
+
+            messagesEl.appendChild(wrapper);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        };
+
+        const toggleTypingIndicator = (show) => {
+            let indicator = document.getElementById('typing-indicator');
+            if (show && !indicator) {
+                indicator = document.createElement('div');
+                indicator.id = 'typing-indicator';
+                indicator.className = 'flex items-center gap-4 justify-start p-4';
+                indicator.innerHTML = `<div class="hud-avatar flex-shrink-0 w-10 h-10 flex items-center justify-center font-semibold text-white bg-black/20 backdrop-blur-sm border border-cyan-400/30"><i class="fas fa-robot text-cyan-400"></i></div><div class="typing-indicator"><span></span><span></span><span></span></div>`;
+                messagesEl.appendChild(indicator);
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+            } else if (!show && indicator) {
+                indicator.remove();
+            }
+        };
+
+        const updateAuthUI = (user) => {
+            if (user) {
+                userNameEl.textContent = user.email.split('@')[0];
+                userStatusEl.textContent = user.email;
+                const avatarContent = document.createElement('div');
+                avatarContent.className = 'hud-avatar w-10 h-10 bg-cyan-500 flex items-center justify-center font-semibold text-black';
+                avatarContent.innerHTML = `<span class="font-bold text-lg">${user.email.charAt(0).toUpperCase()}</span>`;
+                avatarEl.innerHTML = '';
+                avatarEl.appendChild(avatarContent);
+
+                loginBtn.textContent = 'Portal';
+                loginBtn.onclick = () => {
+                    if (PORTAL_URL && PORTAL_URL.trim().length > 0) {
+                        window.location.href = PORTAL_URL;
+                    } else {
+                        // If no portal URL set, open chat or auth modal as fallback
+                        if (auth && auth.currentUser) openChatbot(); else authModal.classList.add('open');
+                    }
+                };
+                logoutBtn.classList.remove('hidden');
+            } else {
+                avatarEl.innerHTML = `<div class="hud-avatar w-10 h-10 bg-cyan-500 flex items-center justify-center font-semibold text-black"><i class="fas fa-user-circle text-2xl"></i></div>`;
+                userNameEl.textContent = 'Please Log In';
+                userStatusEl.textContent = '';
+                loginBtn.textContent = 'Log In / Sign Up';
+                loginBtn.onclick = () => authModal.classList.add('open');
+                logoutBtn.classList.add('hidden');
+                messagesEl.innerHTML = `<div class="p-4 text-center text-slate-400">${translations[currentLanguage].loginRequired}</div>`;
+                uiChatList.innerHTML = '';
+            }
+            setUIReady(true);
+        };
+
+        const toggleAuthMode = () => {
+            isLoginMode = !isLoginMode;
+            authForm.reset();
+            authTitle.textContent = isLoginMode ? 'Log In' : 'Create Account';
+            authSubtitle.textContent = isLoginMode ? 'Access your AIET student portal.' : 'Get started with a new account.';
+            authSubmitBtn.textContent = isLoginMode ? 'Continue' : 'Create Account';
+            authPromptText.textContent = isLoginMode ? "Don't have an account?" : 'Already have an account?';
+            authToggleModeBtn.textContent = isLoginMode ? 'Sign up' : 'Log in';
+            if (isLoginMode) {
+                confirmPasswordGroup.classList.add('hidden');
+                authConfirmPasswordEl.required = false;
+                authConfirmPasswordEl.disabled = true;
+            } else {
+                confirmPasswordGroup.classList.remove('hidden');
+                authConfirmPasswordEl.required = true;
+                authConfirmPasswordEl.disabled = false;
+            }
+        };
+
+        const initFirebase = async () => {
+            try {
+                // Basic validation for firebase config presence. If missing, show a friendly message but don't throw.
+                if (!firebaseConfig || !firebaseConfig.projectId || !firebaseConfig.apiKey) {
+                    console.warn('Firebase config appears incomplete. Firebase initialization may fail.');
+                    showToast('Firebase configuration is incomplete. Please verify firebaseConfig in the script.', 'error');
+                }
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                // Inform developer if Gemini key isn't configured (non-blocking)
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        isAuthReady = true;
+                        updateAuthUI(user);
+                        listenToChatHistory();
+                    } else {
+                        userId = null;
+                        isAuthReady = false;
+                        if (unsubscribeFromChat) unsubscribeFromChat();
+                        if (unsubscribeFromChatList) unsubscribeFromChatList();
+                        currentChatSessionId = null;
+                        updateAuthUI(null);
+                    }
+                });
+            } catch (err) {
+                console.error("Firebase Init Error:", err);
+                showFirebaseConnectionError();
+            }
+        };
+
+        const renderChatList = (chatDocs) => {
+            uiChatList.innerHTML = '';
+            chatDocs.forEach(doc => {
+                const chatData = doc.data();
+                const previewText = chatData.messages?.[1]?.text || 'New Chat';
+                const itemContainer = document.createElement('div');
+                itemContainer.className = `group w-full text-left px-3 py-2 rounded-md hover:bg-white/10 transition text-sm flex justify-between items-center cursor-pointer`;
+                if (doc.id === currentChatSessionId) { itemContainer.classList.add('bg-white/10'); }
+                itemContainer.dataset.sessionId = doc.id;
+                const textSpan = document.createElement('span');
+                textSpan.className = 'truncate pointer-events-none';
+                textSpan.innerHTML = `<i class="fas fa-comment-dots mr-2 text-slate-400"></i> ${previewText}`;
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'text-slate-500 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0';
+                deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i>`;
+                deleteBtn.dataset.sessionId = doc.id;
+                deleteBtn.dataset.action = 'delete';
+                deleteBtn.setAttribute('aria-label', 'Delete chat');
+                itemContainer.appendChild(textSpan);
+                itemContainer.appendChild(deleteBtn);
+                uiChatList.appendChild(itemContainer);
+            });
+        };
+
+        const listenToChat = (sessionId) => {
+            if (unsubscribeFromChat) unsubscribeFromChat();
+
+            let isFirstLoad = true;
+
+            if (currentChatSessionId !== sessionId) {
+                currentChatSessionId = sessionId;
+                document.querySelectorAll('#ui-chat-list div[data-session-id]').forEach(btn => {
+                    btn.classList.toggle('bg-white/10', btn.dataset.sessionId === sessionId);
+                });
+            }
+            const sessionRef = doc(db, 'artifacts', appId, 'users', userId, 'chat_history', sessionId);
+            unsubscribeFromChat = onSnapshot(sessionRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const messages = docSnap.data().messages || [];
+
+                    if (isFirstLoad) {
+                        messagesEl.innerHTML = '';
+                        messages.forEach(msg => renderMessage(msg, false));
+                        isFirstLoad = false;
+                    } else {
+                        const lastMessage = messages[messages.length - 1];
+                        if (messagesEl.children.length < messages.length) {
+                            renderMessage(lastMessage, lastMessage.role === 'bot');
+                        }
+                    }
+
+                    if (messages.length <= 1) {
+                        displaySuggestionChips();
+                    } else {
+                        suggestionChipsContainer.innerHTML = '';
+                    }
+                }
+                setUIReady(true);
+            }, (err) => console.error("Snapshot error:", err));
+        };
+
+        const listenToChatHistory = () => {
+            if (!isAuthReady || !userId) return;
+            if (unsubscribeFromChatList) unsubscribeFromChatList();
+            const chatRef = collection(db, 'artifacts', appId, 'users', userId, 'chat_history');
+            const q = query(chatRef, orderBy("updatedAt", "desc"));
+            unsubscribeFromChatList = onSnapshot(q, (snapshot) => {
+                renderChatList(snapshot.docs);
+                if (snapshot.empty) {
+                    startNewChat();
+                } else {
+                    if (!currentChatSessionId) {
+                        listenToChat(snapshot.docs[0].id);
+                    }
+                }
+            }, (err) => { console.error("Failed to listen to chat history:", err); showFirebaseConnectionError(); });
+        };
+
+        const startNewChat = async () => {
+            if (!isAuthReady || !userId) return null;
+            currentChatSessionId = null;
+            setUIReady(false);
+            try {
+                const newDocRef = await addDoc(collection(db, 'artifacts', appId, 'users', userId, 'chat_history'), { createdAt: new Date(), updatedAt: new Date(), messages: [{ role: 'bot', text: "Hello! I am AIET Mitra, your AI assistant. How can I help you today?" }] });
+                return newDocRef.id;
+            } catch (err) { showFirebaseConnectionError(); return null; }
+        };
+
+        const deleteChatSession = async (sessionIdToDelete) => {
+            if (!userId || !sessionIdToDelete) return;
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'users', userId, 'chat_history', sessionIdToDelete);
+                await deleteDoc(docRef);
+                showToast('Chat deleted.', 'success');
+                if (currentChatSessionId === sessionIdToDelete) {
+                    currentChatSessionId = null;
+                    messagesEl.innerHTML = '';
+                }
+            } catch (error) { console.error("Error deleting chat:", error); showToast('Failed to delete chat.', 'error'); }
+        };
+
+        const getAIResponse = async (userQuery) => {
+            // Preferred: call your serverless proxy at /api/gemini-proxy which injects the secret key server-side.
+            // Never call Gemini directly from the browser: API keys must remain server-side.
+            const proxyUrl = '/api/gemini-proxy';
+            try {
+                // Build system prompt to send to the proxy (keeps behavior identical to previous client call)
+                const langName = translations[currentLanguage].langName;
+                const systemPrompt = `You are 'AIET Mitra', a specialized AI assistant for Apollo Institute of Engineering and Technology (AIET), which is affiliated with Gujarat Technological University (GTU). Your primary function is to provide short, accurate answers STRICTLY related to AIET and GTU. This includes: admissions, scholarships, fees, hostel information, exam schedules for both institutions, and other common student FAQs. RULES: 1. Be concise. 2. Stay on topic (only AIET/GTU). 3. When refusing, state purpose clearly. Language: ${langName}.`;
+
+                const resp = await fetch(proxyUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: userQuery, systemPrompt })
+                });
+
+                if (!resp.ok) {
+                    // If proxy returns 404/500 (not deployed), provide the friendly configuration message
+                    if (resp.status === 404 || resp.status === 500) {
+                        return "The AI service is not configured yet. Please contact the college chatbot administrator.";
+                    }
+                    throw new Error('Proxy error: ' + resp.status);
+                }
+
+                const json = await resp.json();
+                const text = json.candidates?.[0]?.content?.parts?.[0]?.text || json.output?.[0]?.content?.[0]?.text;
+                return text || "I'm sorry, I couldn't generate a response at this moment.";
+            } catch (err) {
+                console.error('Error calling AI proxy:', err);
+                return "My apologies, I'm having trouble connecting to the AI service right now. Please try again later.";
+            }
+        };
+
+        const sendMessage = async (messageText) => {
+            if (isBotTyping || !isAuthReady || !userId) return;
+            const userMessage = (typeof messageText === 'string' ? messageText : inputEl.value).trim();
+            if (!userMessage) return;
+
+            suggestionChipsContainer.innerHTML = '';
+            let session = currentChatSessionId || await startNewChat();
+            if (!session) return;
+            if (typeof messageText !== 'string') inputEl.value = '';
+
+            isBotTyping = true;
+            setUIReady(false);
+
+            const userMessageObj = { role: 'user', text: userMessage, createdAt: new Date() };
+            const chatRef = doc(db, 'artifacts', appId, 'users', userId, 'chat_history', session);
+            await updateDoc(chatRef, {
+                messages: arrayUnion(userMessageObj),
+                updatedAt: new Date()
+            });
+
+            toggleTypingIndicator(true);
+
+            try {
+                const botMessageText = await getAIResponse(userMessage);
+                const botMessageObj = { role: 'bot', text: botMessageText, createdAt: new Date() };
+                await updateDoc(chatRef, {
+                    messages: arrayUnion(botMessageObj),
+                    updatedAt: new Date()
+                });
+
+            } catch (err) {
+                console.error("Error getting AI response:", err);
+                const errorMsg = "Sorry, something went wrong on my end. Please try asking again.";
+                const errorObj = { role: 'bot', text: errorMsg, createdAt: new Date() };
+                await updateDoc(chatRef, {
+                    messages: arrayUnion(errorObj),
+                    updatedAt: new Date()
+                });
+            } finally {
+                toggleTypingIndicator(false);
+                isBotTyping = false;
+                setUIReady(true);
+            }
+        };
+
+        const displaySuggestionChips = () => {
+            suggestionChipsContainer.innerHTML = '';
+            const suggestions = ["Tell me about AIET scholarships", "What are the office hours?", "GTU exam schedule"];
+            suggestions.forEach((text, i) => {
+                const chip = document.createElement('button');
+                chip.className = 'suggestion-chip px-4 py-2 rounded-full text-sm font-medium text-white animate-stagger';
+                chip.style.setProperty('--stagger-delay', `${i * 100}ms`);
+                chip.textContent = text;
+                chip.onclick = () => sendMessage(text);
+                suggestionChipsContainer.appendChild(chip);
+            });
+        };
+
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = authEmailEl.value;
+            const password = authPasswordEl.value;
+            authSubmitBtn.disabled = true;
+            authSubmitBtn.textContent = 'Processing...';
+            try {
+                if (isLoginMode) { await signInWithEmailAndPassword(auth, email, password); showToast('Login successful! Welcome back.', 'success'); }
+                else { if (password !== authConfirmPasswordEl.value) throw new Error("Passwords do not match."); await createUserWithEmailAndPassword(auth, email, password); showToast('Account created successfully!', 'success'); }
+                authModal.classList.remove('open');
+                authForm.reset();
+            } catch (error) {
+                showToast(error.code ? mapFirebaseError(error.code) : error.message, 'error');
+            } finally { authSubmitBtn.disabled = false; authSubmitBtn.textContent = isLoginMode ? 'Continue' : 'Create Account'; }
+        });
+
+        const openChatbot = () => { document.body.classList.add('chatbot-active'); chatContainer.classList.add('active'); };
+        const closeChatbot = () => { document.body.classList.remove('chatbot-active'); chatContainer.classList.remove('active'); };
+
+        chatbotToggleBtn.addEventListener('click', () => { if (auth && auth.currentUser) { openChatbot(); } else { authModal.classList.add('open'); } });
+
+        document.addEventListener('DOMContentLoaded', initFirebase);
+        closeBtn.addEventListener('click', closeChatbot);
+        newChatBtn.addEventListener('click', startNewChat);
+        sendBtn.addEventListener('click', () => sendMessage());
+        inputEl.addEventListener('keydown', (e) => (e.key === 'Enter' && !e.shiftKey) && (e.preventDefault(), sendMessage()));
+        authToggleModeBtn.addEventListener('click', toggleAuthMode);
+        authCloseBtn.addEventListener('click', () => authModal.classList.remove('open'));
+        logoutBtn.addEventListener('click', () => { if (auth) { signOut(auth); showToast('You have been logged out.', 'success'); } else { showToast('No active session to log out.', 'error'); } });
+
+        messagesEl.addEventListener('click', (e) => {
+            const ttsButton = e.target.closest('.tts-button');
+            if (ttsButton) {
+                const messageBubble = ttsButton.closest('.chat-message-bubble');
+                const textNode = messageBubble.cloneNode(true);
+                textNode.querySelector('.tts-button').remove();
+                const textToSpeak = textNode.textContent.trim();
+                if (textToSpeak) speakText(textToSpeak);
+            }
+        });
+
+        micBtn.addEventListener('click', handleVoiceInput);
+        languageSelector.addEventListener('change', (e) => updateUIText(e.target.value));
+
+        uiChatList.addEventListener('click', (e) => {
+            const deleteBtn = e.target.closest('button[data-action="delete"]');
+            if (deleteBtn) { e.stopPropagation(); const sessionId = deleteBtn.dataset.sessionId; if (sessionId) deleteChatSession(sessionId); return; }
+            const chatItem = e.target.closest('div[data-session-id]');
+            if (chatItem && chatItem.dataset.sessionId !== currentChatSessionId) { listenToChat(chatItem.dataset.sessionId); }
+        });
+
+    </script>
+</body>
+
+</html>
